@@ -7,30 +7,16 @@ import os
 
 '''
     This script will take data from the NASA Near Earth Object Web Service,
-    convert the data into a pandas DataFrame, and save the data to a CSV file.
+    convert the data into a JSON file that can loaded into a pandas DataFrame.
 '''
 
 # Load environment variables from .env file, and get the NASA API Key
 load_dotenv()
 api_key = os.getenv("NASA_API_KEY")
 
-# The NASA NEOwS can be accessed by dates (in 7 day intervals), or by iterating
-# through paginated results. This function will return a list of dates in
-# 7 day intervals, starting from June 1st, 2024.
-def weekly_dates(start_date, num_weeks):
-    dates = []
-    current_date = start_date
-    for _ in range(num_weeks + 1):  # +1 to include the start date
-        dates.append(current_date.strftime("%Y-%m-%d"))
-        current_date -= timedelta(days=7)
-    return dates
-
 # Get the start and end dates
 start_date = datetime(2024, 6, 1)
 end_date = start_date - timedelta(days=7)
-
-# Generate dates for 10 weeks
-date_list = weekly_dates(start_date, 10)
 
 def parse_individual_neo(neo_data):
     '''
