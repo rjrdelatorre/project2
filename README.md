@@ -4,8 +4,11 @@
 
 
 TODO:
+
 [ ] Build model v 0.1
+
 [ ] Preprocess Data
+
 [x] Create json file from NASA API that can be used to create the model
 
 FYI:
