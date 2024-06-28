@@ -20,7 +20,7 @@ end_date = start_date - timedelta(days=7)
 
 def parse_individual_neo(neo_data):
     '''
-    This function will take a JSON object from the NASA NEO API and return a
+    This function will take NEO data from the NASA API and return a
     formatted dictionary suitable for a pandas DataFrame.
     '''
     estimated_diameter_km = neo_data['estimated_diameter']['kilometers']
