@@ -14,10 +14,6 @@ import os
 load_dotenv()
 api_key = os.getenv("NASA_API_KEY")
 
-# Get the start and end dates
-start_date = datetime(2024, 6, 1)
-end_date = start_date - timedelta(days=7)
-
 def parse_individual_neo(neo_data):
     '''
     This function will take NEO data from the NASA API and return a
@@ -81,13 +77,17 @@ def retrieve_neo_data(nasa_url):
         
     return {'results':results, 'link':json_data['links']['previous']}
 
-def execute_data_retrieval():
+def execute_data_retrieval(start_date_string="2024-06-01", attempts_count=52):
     '''
     Create the first request to the NASA API. The result will include a link
     to the next chunk of results, which can be used to retrieve more data.
     All results will be added to a list.
     '''
     nasa_url = 'https://api.nasa.gov/neo/rest/v1/feed'
+
+    # Get the start and end dates
+    start_date = datetime.strptime(start_date_string, "%Y-%m-%d")
+    end_date = start_date - timedelta(days=7)
     request_kwargs = {
                         'api_key': api_key,
                         'start_date':start_date.strftime("%Y-%m-%d"),
@@ -106,7 +106,7 @@ def execute_data_retrieval():
         total_results += parse_neo_results_dict(near_earth_objects)
         # Do this same process over the last 52 weeks
         attempts = 0
-        while attempts < 52:
+        while attempts < attempts_count:
             print(f"attempt {attempts + 1}...")
             total_results += retrieve_neo_data(previous_link)['results']
             previous_link = retrieve_neo_data(previous_link)['link']
