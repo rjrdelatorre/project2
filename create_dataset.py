@@ -70,12 +70,14 @@ def retrieve_neo_data(nasa_url):
     if request.status_code == requests.codes.ok:
         json_data = request.json()
         near_earth_objects = json_data['near_earth_objects']
+        link = json_data['links']['previous']
         results = parse_neo_results_dict(near_earth_objects)
     else:
         results = []
+        link = None
         print(f"Error: Unable to retrieve data from {nasa_url}.")
         
-    return {'results':results, 'link':json_data['links']['previous']}
+    return {'results':results, 'link':link}
 
 def execute_data_retrieval(start_date_string="2024-06-01", attempts_count=52):
     '''
@@ -106,7 +108,7 @@ def execute_data_retrieval(start_date_string="2024-06-01", attempts_count=52):
         total_results += parse_neo_results_dict(near_earth_objects)
         # Do this same process over the last 52 weeks
         attempts = 0
-        while attempts < attempts_count:
+        while attempts < attempts_count and previous_link is not None:
             print(f"attempt {attempts + 1}...")
             total_results += retrieve_neo_data(previous_link)['results']
             previous_link = retrieve_neo_data(previous_link)['link']
@@ -130,11 +132,12 @@ def export_to_local_json_file(data, filename):
 
 def main():
     print("...initiating data retrieval...")
-    data = execute_data_retrieval()
+    date_string = '2023-05-01'
+    data = execute_data_retrieval(date_string, 150)
     print("...data retrieval completed...")
     print(f"Total NEOs retrieved: {len(data)}")
     print("...exporting data to JSON file...")
-    file_path = 'resources/neo_data.json'
+    file_path = 'resources/additional_neo_data.json'
     export_to_local_json_file(data, file_path)
 
 
