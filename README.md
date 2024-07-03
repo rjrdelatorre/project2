@@ -78,13 +78,13 @@ using random_oversampler
 weighted avg       0.95      0.84      0.88      2055
 ```
 
-- The resampled data showed a significant improvement in recall score (up to 94%), which shows it performs much better in detecting the presence of a hazardous asteroid.
+- The resampled data showed a significant improvement in recall score (up to 99%), which shows it performs much better in detecting the presence of a hazardous asteroid.
 - The precision score suffered 
 
 ...more interpretation and discussion is required here...
 
 - Tried to improve model performance by retrieving more real data from NASA that showed only hazardous asteroids
-- Wrote script to get additional records
+- Modified create_dataset script to get additional records
 - Extracted only records showing hazardous asteroids
 - Created new RandomForest Model 
 
