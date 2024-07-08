@@ -8,6 +8,7 @@ import os
 '''
     This script will take data from the NASA Near Earth Object Web Service,
     convert the data into a JSON file that can loaded into a pandas DataFrame.
+    - NEO or neo referes to Near Earth Object.
 '''
 
 # Load environment variables from .env file, and get the NASA API Key
@@ -16,8 +17,8 @@ api_key = os.getenv("NASA_API_KEY")
 
 def parse_individual_neo(neo_data):
     '''
-    This function will take NEO data from the NASA API and return a
-    formatted dictionary suitable for a pandas DataFrame.
+    This function will take data about a single NEO from the NASA API and return
+    a formatted dictionary suitable for a pandas DataFrame.
     '''
     estimated_diameter_km = neo_data['estimated_diameter']['kilometers']
     close_approach_data = neo_data['close_approach_data'][0]
@@ -46,9 +47,13 @@ def parse_individual_neo(neo_data):
     return formatted_dict
 
 def parse_neo_results_dict(neo_dict):
+    '''
+    This function will take a dictionary of NEO data from the NASA API and return
+    a list of formatted dictionaries.
+        - The input dictionary has dates as keys, and a list of NEOs as values.
+        - The output list will contain a formatted dictionary for each NEO.
+    '''
     results = []
-    # NEO data is stored in a dictionary with dates as keys
-    # iterate through each date, then parse each NEO into a formatted dictionary
     for date in neo_dict.keys():
         for neo in neo_dict[date]:
             try:
@@ -63,8 +68,9 @@ def parse_neo_results_dict(neo_dict):
 
 def retrieve_neo_data(nasa_url):
     '''
-    This function will retrieve data from the NASA NEO API and return a list of
-    formatted dictionaries.
+    NEO data will be found at the nasa_url, which will be a link to a chunk of
+    data. This function will retrieve the data from the link and return the
+    results and the link to the next chunk of data.
     '''
     request = requests.get(nasa_url)
     if request.status_code == requests.codes.ok:
@@ -122,7 +128,8 @@ def execute_data_retrieval(start_date_string="2024-06-01", attempts_count=52):
 
 def export_to_local_json_file(data, filename):
     '''
-    This function will export a list of dictionaries to a JSON file.
+    This function will export a list of dictionaries to a JSON file for 
+    convenient usage in creating pandas DataFrames.
     '''
     # Export without indentation to make the file more compact and faster
     # to read/write later.
@@ -131,14 +138,17 @@ def export_to_local_json_file(data, filename):
 
 
 def main():
-    print("...initiating data retrieval...")
-    date_string = '2023-05-01'
-    data = execute_data_retrieval(date_string, 150)
-    print("...data retrieval completed...")
-    print(f"Total NEOs retrieved: {len(data)}")
-    print("...exporting data to JSON file...")
-    file_path = 'resources/additional_neo_data.json'
-    export_to_local_json_file(data, file_path)
+    '''
+    Uncomment and execute if you need to create a local JSON file of NEO data.
+    '''
+    # print("...initiating data retrieval...")
+    # date_string = '2023-05-01'
+    # data = execute_data_retrieval(date_string, 150)
+    # print("...data retrieval completed...")
+    # print(f"Total NEOs retrieved: {len(data)}")
+    # print("...exporting data to JSON file...")
+    # file_path = 'resources/additional_neo_data.json'
+    # export_to_local_json_file(data, file_path)
 
 
 if __name__ == "__main__":
