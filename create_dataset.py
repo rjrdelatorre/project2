@@ -9,6 +9,15 @@ import os
     This script will take data from the NASA Near Earth Object Web Service,
     convert the data into a JSON file that can loaded into a pandas DataFrame.
     - NEO or neo referes to Near Earth Object.
+
+    Process:
+    - Query the NASA API for a week's worth of NEO data (1 week period is
+      defined by the API).
+    - This initial query will provide a link to the previous week's data, and
+      the script can continue to query the API for more data.
+    - For each date within the 7 day period, the script will parse the NEO data
+      and format it into a dictionary. These dictionaries will be the rows of
+      the pandas DataFrame.
 '''
 
 # Load environment variables from .env file, and get the NASA API Key
@@ -139,7 +148,8 @@ def export_to_local_json_file(data, filename):
 
 def main():
     '''
-    Uncomment and execute if you need to create a local JSON file of NEO data.
+      Uncomment and execute if you need to create a local JSON file of NEO data.
+      Alternatively, these functions can be called from another script.
     '''
     # print("...initiating data retrieval...")
     # date_string = '2023-05-01'

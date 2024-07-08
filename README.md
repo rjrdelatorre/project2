@@ -67,7 +67,7 @@ original_data
    macro avg       0.89      0.57      0.60      2055
 weighted avg       0.93      0.94      0.91      2055
 
-using random_oversampler
+Resampled data using random_oversampler
                 precision    recall  f1-score   support
 
            0       1.00      0.83      0.91      1905
@@ -78,10 +78,46 @@ using random_oversampler
 weighted avg       0.95      0.84      0.88      2055
 ```
 
-- The resampled data showed a significant improvement in recall score (up to 99%), which shows it performs much better in detecting the presence of a hazardous asteroid.
-- The precision score suffered 
+Interpretation:
 
-...more interpretation and discussion is required here...
+- Class 0 (Not Hazardous): The second set shows 100% precision, but a significant drop in recall, showing that while the model is still very good at predicting class 0, it does so less often, leading to more false negatives.
+- Class 1 (Hazardous): The second set shows significant improvement in recall, but a significant decrease in precision. This means the model is now much better at identifying instances of the hazardous class, but it has a higher rate of false positives. We want to improve our f1-score still, since this takes into consideration both precision and recall.
+- Overall Accuracy: The accuracy is lower in the second set, reflecting the trade-off between precision and recall.
+
+Did the model improve?
+
+- For class 1, the second set of metrics shows a significant improvement in recall and F1-score, which indicates that the model is now much better at identifying positive instances.
+- For class 0, the decrease in recall and F1-score suggests that the model’s performance for negative instances has worsened.
+
+Conclusion:
+
+- The second set of metrics represents an improvement for class 1 (hazardous instances) in terms of recall and F1-score. However, this comes at the cost of decreased performance for class 0 (negative instances) and overall accuracy. Let's see if we can get better performance overall at picking both classes.
+
+- Try adding data in the minority class using SMOTE
+
+```
+Classification Report - Original Data
+              precision    recall  f1-score   support
+
+           0       0.94      1.00      0.97      1905
+           1       0.84      0.14      0.24       150
+
+    accuracy                           0.94      2055
+   macro avg       0.89      0.57      0.60      2055
+weighted avg       0.93      0.94      0.91      2055
+
+---------
+Classification Report - Resampled Data - SMOTE
+              precision    recall  f1-score   support
+
+           0       0.98      0.92      0.95      1905
+           1       0.41      0.73      0.53       150
+
+    accuracy                           0.90      2055
+   macro avg       0.69      0.82      0.74      2055
+weighted avg       0.94      0.90      0.92      2055
+```
+- Resampling with SMOTE has improved the model’s performance on the minority class (class 1) by significantly increasing recall and the F1-score, though at the cost of a drop in precision for class 1. This is a typical trade-off in imbalanced classification problems. The overall accuracy is slightly reduced, but the macro averages suggest a more balanced model. The choice between these models depends on the specific application and whether the focus is on reducing false negatives (improving recall) or maintaining high precision.
 
 - Tried to improve model performance by retrieving more real data from NASA that showed only hazardous asteroids
 - Modified create_dataset script to get additional records
@@ -114,7 +150,23 @@ Classification Report with New Data
 weighted avg       0.91      0.87      0.88      2458
 ```
 
-- ...need to finish interpretation...
+- Improvement for Minority Class (Class 1): The new data model shows a significant improvement in recall (from 0.14 to 0.98) and F1-score (from 0.24 to 0.77) for the minority class. This means that the new model is much better at identifying the minority class, which is the primary goal.
+- Overall Performance Trade-off: While there is a slight drop in overall accuracy and weighted average F1-score, the improvement in the minority class detection far outweighs these losses, especially if identifying the minority class correctly is critical.
+
+Given the importance of correctly identifying the minority class, the new data model represents a substantial improvement over the original model. The significant increase in recall and F1-score for class 1 indicates that the new model is much better suited for tasks where detecting the minority class accurately is crucial.
+
+```
+Classification Report - Resampled and Added Data - SMOTE
+              precision    recall  f1-score   support
+
+           0       0.97      0.89      0.93      1902
+           1       0.71      0.92      0.80       556
+
+    accuracy                           0.89      2458
+   macro avg       0.84      0.90      0.86      2458
+weighted avg       0.91      0.89      0.90      2458
+```
+- The **Resampled and Added Data - SMOTE** model is generally better. It shows improvements in precision, recall, and F1-score for class 1 (the minority class), which is crucial for this application. It also provides slightly better overall performance metrics, indicating a more balanced and effective model.
 
 ### TODO
 
