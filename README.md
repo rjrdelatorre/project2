@@ -156,6 +156,11 @@ weighted avg       0.91      0.87      0.88      2458
 Given the importance of correctly identifying the minority class, the new data model represents a substantial improvement over the original model. The significant increase in recall and F1-score for class 1 indicates that the new model is much better suited for tasks where detecting the minority class accurately is crucial.
 
 ```
+Testing data accuracy score: 0.8991049633848658
+Training data accuracy score: 1.0
+Balanced Accuracy Score: 0.9068038944238931
+
+---------
 Classification Report - Resampled and Added Data - SMOTE
               precision    recall  f1-score   support
 
