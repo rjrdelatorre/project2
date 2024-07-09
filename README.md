@@ -183,8 +183,9 @@ NASA likely has a more detailed data set behind the scenes that might allow for 
 
 ### Key Files
 
-- [neo_model.py](resources/neo_model.py): Contains the model creation and optimization
-- [neo_data.json](resources/neo_data.json): Parsed data set used to create the first models
-- [additional_neo_data.json](additional_neo_data.json): Additional parsed data
-- [Final Grp 2 Presentation...](Final Grp 2 Presentation w simulation 7.8.24.pptx): Presentation slides
-- working_copies directory: Free experiments before moving code to neo_model jupyter notebook.
+- [neo_model.py](neo_model.py): Contains the model creation and optimization
+- [create_dataset.py](create_dataset.py): Script for retrieving and formatting NASA data
+- resources/neo_data.json: Parsed data set used to create the first models
+- resources/additional_neo_data.json: Additional parsed data
+- Final Grp 2 Presentation w simulation 7.8.24.pptx: Presentation slides
+- working_copies directory: Free experiments before moving code to neo_model jupyter notebook
