@@ -181,28 +181,10 @@ We were able to significantly increase the model's ability to classify potential
 
 NASA likely has a more detailed data set behind the scenes that might allow for further feature engineering that could help improve the model. It would be very interesting to see their full method for identifying which asteroids are potentially harmful. 
 
-### TODO
+### Key Files
 
-[x] Build model v 0.1
-
-  [x] Summarize all test scores from existing models
-  [x] Optimize Random Forest Model (including addressing Overfitting)
-  [x] Create data retrieval script for new NASA
-  [x] Concatenate new NASA data to base dataset
-
-So far: Random Forest is in the lead.
-- Badly imbalanced data
-- Model is not so good at picking the "hazardous" outcome (minority)
-- Optimization work will be to lower the occurrences of "false positives"
-
-[x] Preprocess Data
-- Ensuring data is numerical and not string
-- Scale using StandardScaler and MinMaxScaler (Standard performed better - only just)
-- True/False outcomes were turned in 0,1 outcomes when the data was pulled from the API
-
-[x] Create json file from NASA API that can be used to create the model
-- Create script (create_dataset.py) that makes a request to NASA NEOwS API for data in 1 week intervals. Do this for 52 weeks beginning from June 1st.
-- Format the data into something we can use for machine learning models (inspired by Kaggle dataset: https://www.kaggle.com/datasets/sameepvani/nasa-nearest-earth-objects)
-
-FYI:
-- [Script for retrieving and formatting data from NASA](create_dataset.py)
+- [neo_model.py](resources/neo_model.py): Contains the model creation and optimization
+- [neo_data.json](resources/neo_data.json): Parsed data set used to create the first models
+- [additional_neo_data.json](additional_neo_data.json): Additional parsed data
+- [Final Grp 2 Presentation...](Final Grp 2 Presentation w simulation 7.8.24.pptx): Presentation slides
+- working_copies directory: Free experiments before moving code to neo_model jupyter notebook.
