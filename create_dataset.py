@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
+import csv
 import json
 import time
 import requests
@@ -144,6 +145,27 @@ def export_to_local_json_file(data, filename):
     # to read/write later.
     with open(filename, 'w') as f:
         json.dump(data, f)
+
+def export_to_local_csv_file(data, filename):
+    '''
+    This function will export a list of dictionaries to a CSV file for 
+    convenient usage in creating pandas DataFrames.
+    '''
+    # Open the file in write mode
+    with open(filename, 'w', newline='') as f:
+        # If data is not empty, proceed
+        if data:
+            # Use the keys of the first dictionary as fieldnames (column headers)
+            fieldnames = data[0].keys()
+            # Create a DictWriter object with the fieldnames
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            
+            # Write the header (column names)
+            writer.writeheader()
+            
+            # Write each dictionary as a row in the CSV
+            for row in data:
+                writer.writerow(row)
 
 
 def main():
