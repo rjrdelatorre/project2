@@ -7,8 +7,9 @@ Create a model that can classify whether or not a near-earth object poses a risk
 
 **Data Retrieval and Formatting**
 
-The [create_dataset.py] script retrieves data from the NASA Near Earth Object (NEO) Web Service and prepares it for analysis. 
+The [create_dataset.py](create_dataset.py) script retrieves data from the NASA Near Earth Object (NEO) Web Service and prepares it for analysis. 
 
+- Inspired by [Kaggle dataset](https://www.kaggle.com/datasets/sameepvani/nasa-nearest-earth-objects), we decided to manually retrieve the data instead of downloading the prepared version
 - Queries the NASA API for a week's worth of NEO data at a time (does this for 52 periods)
 - Structures the data into a dictionary with attributes like ID, name, magnitude, diameter, velocity, miss distance, orbiting body (Earth), and classification
 - Begins preprocessing by removing rows that contain blanks and converting boolean values to 0,1
